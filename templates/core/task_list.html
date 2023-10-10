@@ -1,0 +1,59 @@
+{% extends "base.html" %}
+{% block content %}
+
+  <h1>Tasks:
+    <a href="{% url 'core:task_create' %}" class="btn btn-primary btn-outline rounded-pill">
+      Create
+    </a>
+  </h1>
+
+
+  {% if task_list %}
+    {% for task in task_list %}
+      <hr>
+      <div class="d-flex d-row justify-content-between">
+
+
+        <div><span style="font-size: 20px">{{ task.content }}</span>
+          {% if task.is_done %}
+            <strong>
+            <span class="text-success h3 m-5">Done</span>
+          {% else %}
+            <span class="text-danger h3 m-5">Not done</span>
+          {% endif %}
+          </strong>
+        </div>
+        {% if task.is_done %}
+          <a class="btn btn-secondary rounded-pill"
+             href="{% url 'core:task_toggle_completion' task.id %}">Undo</a>
+
+        {% else %}
+          <a class="btn btn-success rounded-pill"
+             href="{% url 'core:task_toggle_completion' task.id %}">Complete</a>
+        {% endif %}
+      </div>
+
+
+      <p class="text-muted bp3-text-small m-4"> Created at: {{ task.created_at }}
+        {% if task.deadline %}
+          <span style="color: brown; font-weight: bold">Deadline: {{ task.deadline }}</span>
+        {% endif %}
+
+      </p>
+
+      <p>
+        Tags:
+        {% for tag in task.tags.all %}
+          <span class="tag">{{ tag.name }}</span>
+        {% endfor %}
+        <a href="{% url 'core:task_update' task.id %}" class="btn btn-sm btn-info btn-outline mx-2">Update</a>
+        <a href="{% url 'core:task_delete' task.id %}" class="btn btn-sm btn-danger btn-outline mx-2">Delete</a>
+      </p>
+
+    {% endfor %}
+    <hr>
+  {% else %}
+    <p>There are no tasks to display.</p>
+  {% endif %}
+
+{% endblock %}

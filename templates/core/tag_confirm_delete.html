@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block content %}
+  <h1>Delete tag?</h1>
+  <p><strong>Tag name:</strong> {{ tag.name }} </p>
+  <form action="" method="post">
+    {% csrf_token %}
+            <input type="submit" value="Submit" class="btn btn-danger btn-outline rounded-pill">
+        <a href="{% url 'core:tag_list' %}" class="btn btn-dark btn-outline rounded-pill">Back</a>
+  </form>
+{% endblock %}
