@@ -8,7 +8,7 @@ from core.forms import TagForm, TaskForm
 
 
 def index(request: HttpRequest) -> HttpResponse:
-    return render(request, "base.html")
+    return HttpResponseRedirect(reverse("core:task_list"))
 
 
 class TaskListView(generic.ListView):
